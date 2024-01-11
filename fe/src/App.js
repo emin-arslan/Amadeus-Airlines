@@ -3,6 +3,7 @@ import Header from "./components/Header";
 import { useDispatch, useSelector } from 'react-redux';
 import { changeMobileStatus } from "./actions/pageActions";
 import { getIsMobile } from "./selectors/appSelectors";
+import Container from "./components/Container";
 
 function App() {
   const isMobile = useSelector(getIsMobile)
@@ -24,6 +25,7 @@ function App() {
   return (
     <div>
       <Header />
+      <Container />
     </div>
   );
 }
