@@ -13,6 +13,7 @@ const Container = () => {
         
       </div>
       <div className="flex-col h-1/6 w-3/6">
+        
         <FlightReservation />
         <div className="flex h-auto w-full border-2 border-gray-200 rounded bg-[#f9f9f9] mt-10 p-2">
         <FlightCard />
