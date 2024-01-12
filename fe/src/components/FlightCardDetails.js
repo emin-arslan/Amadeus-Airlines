@@ -3,7 +3,7 @@ import AmadeusLogo from "../assests/amadeusLogo.png";
 
 const FlightCardDetails = ({ departureAirport, destinationAirport }) => {
   return (
-    <div className="flex-col flex h-full w-full items-baseline justify-center ">
+    <div className="flex-col flex h-full w-full items-baseline justify-center mt-2">
       <div className="w-full">
         <span className="text-xl font-semibold">Flight Details</span>
       </div>

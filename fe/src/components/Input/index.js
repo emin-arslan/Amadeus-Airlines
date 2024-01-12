@@ -2,18 +2,16 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import FlyingPlane from "../../assests/flyingPlane.svg";
 
-const Input = ({ title, onChange, additionalClasses, name }) => {
+const Input = ({ title, onChange, additionalClasses, name, flightRoute, setFlightRoute, flightType }) => {
   const airportNames = require("./airportNames.json");
-  const [airport, setAirPort] = useState([]);
-  const [selectedAirport, setSelectedAirport] = useState([]);
-
+  const [findedAirports, setFindedAirports] = useState([]);
+  
   const handleSelectedAirport = (e) => {
-    setSelectedAirport(e);
+    setFlightRoute({ ...flightRoute, [flightType]: e });
   }
   const handleOnChange = (text) => {
-    setSelectedAirport([])
+    setFlightRoute({ ...flightRoute, [flightType]: {} });
     text = text.toUpperCase();
-    console.log(text);
     if (text !== " " && text !== null && text !== undefined && text !== "") {
       const result = airportNames
         .filter(
@@ -28,8 +26,8 @@ const Input = ({ title, onChange, additionalClasses, name }) => {
           code: airport["code"],
         }));
 
-      setAirPort([...result]);
-    } else setAirPort([]);
+      setFindedAirports([...result]);
+    } else setFindedAirports([]);
   };
 
   return (
@@ -39,22 +37,22 @@ const Input = ({ title, onChange, additionalClasses, name }) => {
           onChange={(e) => handleOnChange(e.target.value)}
           required
           className={`h-14 px-4 rounded w-full transition-colors outline-none peer text-sm ${additionalClasses}`}
-          value={selectedAirport['name']?.length > 0 ? selectedAirport['city'] : null}
+          value={flightRoute[flightType]['name']?.length > 0 ? flightRoute[flightType]['city'] : null}
         ></input>
         <span className="absolute top-0 left-0 h-full px-4 flex items-center font-semibold text-sm text-[#818e95] transition-all peer-focus:h-4 peer-focus:text-[10px] peer-valid:h-4 peer-valid:text-[10px]">
           {title}
         </span>
         <span className="absolute bottom-0 left-0 w-48 text-xs text-[#818e95] font-semibold px-4 line-clamp-1">
           {
-            selectedAirport['name']?.length > 0 && selectedAirport['name']
+            flightRoute[flightType]['name']?.length > 0 && flightRoute[flightType]['name']
           }
         </span>
       </label>
-      <div className={`absolute z-50 bg-white shadow-xl h-auto w-96 ${selectedAirport['name']?.length > 0 && 'hidden'}`}>
-        <span className={`block px-5 py-3 font-semibold ${airport.length < 1 && 'hidden'}`}>
-          {airport.length < 1 ? "Tüm Havalimanlarımız" : "HAVALİMANI"}
+      <div className={`absolute z-50 bg-white shadow-xl h-auto w-96 ${flightRoute[flightType]['name']?.length > 0 && 'hidden'}`}>
+        <span className={`block px-5 py-3 font-semibold ${findedAirports.length < 1 && 'hidden'}`}>
+          {findedAirports.length < 1 ? "Tüm Havalimanlarımız" : "HAVALİMANI"}
         </span>
-        {airport.map((e, index) => {
+        {findedAirports.map((e, index) => {
           if (index < 5)
             return (
               <div key={index} id={index} onClick={()=> handleSelectedAirport(e)} className="flex flex-wrap items-center px-5 py-2 hover:bg-[#3685e7] group hover:text-white text-[15px] hover:cursor-pointer font-semibold">
