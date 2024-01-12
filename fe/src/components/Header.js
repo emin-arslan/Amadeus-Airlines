@@ -3,6 +3,7 @@ import PersonLogo from "../assests/person.svg";
 import HamburgerMenu from "./HamburgerMenu";
 import { useSelector } from "react-redux";
 import {getIsMobile} from "../selectors/appSelectors"
+import Input from "./Input";
 
 const Header = () => {
   const logo = require("../assests/amadeusLogo.png")
@@ -11,7 +12,8 @@ const Header = () => {
 
 
   return (
-    <div className="fixed h-[60px] w-full bg-[#232b38] items-center">
+    
+    <div className="fixed h-[60px] w-full bg-[#232b38] items-center z-50">
       <div className="flex h-full w-full text-white justify-between items-center px-5">
         <div className="flex h-full items-center space-x-2">
           <span><img width={50} height={50} src={logo} alt="amadeusLogo"></img></span>
