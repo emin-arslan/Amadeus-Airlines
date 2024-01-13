@@ -17,7 +17,7 @@ const Header = () => {
       <div className="flex h-full w-full text-white justify-between items-center px-5">
         <div className="flex h-full items-center space-x-2">
           <span><img width={50} height={50} src={logo} alt="amadeusLogo"></img></span>
-          <span className="font-bold tracking-wide md:hidden">AMADEUS AIRLINES</span>
+          <span className="font-bold tracking-wide md:hidden sm:hidden">AMADEUS AIRLINES</span>
           {
             isMobile && (<HamburgerMenu/>)
           }
@@ -30,14 +30,14 @@ const Header = () => {
                   className="relative flex h-full items-center select-none hover:bg-[#1a202a] hover:cursor-pointer hover:after:flex after:hidden after:absolute after:h-[68px] after:border-[#e81932] md:after:border-b-0 after:w-full after:border-b-4 transition-colors ease-in-out duration-500"
                   key={index}
                 >
-                  <span className={`${index !== 5 ? 'border-r border-dotted md:hidden' : 'lg:px-3 font-normal text-sm'} px-4 lg:px-1`}>{menu}</span>
+                  <span className={`${index !== 5 ? 'border-r border-dotted md:hidden sm:hidden' : 'lg:px-3 font-normal text-sm'} px-4 lg:px-1`}>{menu}</span>
                 </li>
               );
             })}
           </ul>
           <div className="flex items-center">
             <div className="flex items-center justify-center px-2 rounded-2xl border p-1 font-semibold text-[13px] hover:cursor-pointer hover:bg-[#444b56]">
-            <span className="select-none mr-1 md:hidden">
+            <span className="select-none mr-1 md:hidden sm:hidden">
               GİRİŞ YAP
             </span>
             <img src={PersonLogo} alt="person-logo"></img>

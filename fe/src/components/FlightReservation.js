@@ -4,11 +4,14 @@ import Input from "./Input"
 import Checkbox from './Input/Checkbox'
 import RightArrow from '../assests/rightArrow.svg'
 
-const FlightReservation = ({setFindedFlightList}) => {
-  const [isOneWay, setIsOneWay] = useState(false);
+const FlightReservation = ({setFindedFlightList,isOneWay, setIsOneWay}) => {
+  const [ticketDates, setTicketDates] = useState({
+    departureDate:'',
+    arrivalDate:''
+  })
   const [flightRoute, setFlightRoute] = useState({
-    departureAirPort: {name: '',city: '', code: '', country: ''},
-    destinationAirPort: {name: '',city: '', code: '', country: ''},
+    departureAirport: {name: '',city: '', code: '', country: ''},
+    destinationAirport: {name: '',city: '', code: '', country: ''},
     departureDate: '',
     arrivalDate: '',
   })
@@ -16,14 +19,19 @@ const FlightReservation = ({setFindedFlightList}) => {
   const flights = require("./flights.json");
 
   const searchFlight = () => {
+    const checkOneWayInputs = isOneWay  ? flightRoute['departureDate'].length > 0 :(flightRoute['departureDate'].length >0 && flightRoute['arrivalDate'].length>0)
+    console.log(flightRoute['arrivalDate'], 'oneywaytip')
+    if(flightRoute['departureAirport']['code'] && flightRoute['destinationAirport']['code'] && checkOneWayInputs)
+    {
+    setFindedFlightList(undefined)
     const findedFlights = flights
     .filter((flight) => {
       const flightDepartureDate = new Date(flight['departureDate']);
       const flightRouteDepartureDate = new Date(flightRoute['departureDate']);
       const areDatesEqual = flightDepartureDate.toISOString().slice(0, 10) === flightRouteDepartureDate.toISOString().slice(0, 10);
       return (
-        flight['departureAirport']['code'] == flightRoute['departureAirPort']['code'] &&
-        flight['destinationAirport']['code'] == flightRoute['destinationAirPort']['code'] &&
+        flight['departureAirport']['code'] == flightRoute['departureAirport']['code'] &&
+        flight['destinationAirport']['code'] == flightRoute['destinationAirport']['code'] &&
         areDatesEqual
       );
     })
@@ -38,6 +46,12 @@ const FlightReservation = ({setFindedFlightList}) => {
       price: resultFlight.price
     }));
     setFindedFlightList(findedFlights);
+    }
+    console.log('boş alan bırakmayınız.')
+  }
+
+  const handleInputDateChange = (e) => {
+    setFlightRoute({ ...flightRoute, ['departureDate']: e.target.value})
   }
   return (
     <div className='h-auto'>
@@ -50,11 +64,11 @@ const FlightReservation = ({setFindedFlightList}) => {
       <div className='flex-col flex w-full items bg-white shadow-xl h-40 rounded-b rounded-tr p-3 pl-3 space-y-2'>
         <Checkbox isOneWay = {isOneWay} setIsOneWay = {setIsOneWay} />
         <div className='flex space-x-4'>
-        <Input flightRoute = {flightRoute} setFlightRoute = {setFlightRoute} flightType = 'departureAirPort' additionalClasses='w-48 bg-[#f4f6f8]' title='NEREDEN'></Input>
-        <Input flightRoute = {flightRoute} setFlightRoute = {setFlightRoute} flightType = 'destinationAirPort' additionalClasses='w-48 bg-[#f4f6f8] ' title='NEREYE'></Input> 
+        <Input name='fromAirport' flightRoute = {flightRoute} setFlightRoute = {setFlightRoute} flightType = 'departureAirport' additionalClasses='w-48 bg-[#f4f6f8]' title='NEREDEN'></Input>
+        <Input name='toAirport' flightRoute = {flightRoute} setFlightRoute = {setFlightRoute} flightType = 'destinationAirport' additionalClasses='w-48 bg-[#f4f6f8] ' title='NEREYE'></Input> 
         <div className='flex flex-col h-14 items-center justify-center bg-[#f4f6f8]'>
         <span className='text-md font-semibold h-fit tracking-wide '>Gidiş</span>
-        <input onChange={(e)=>setFlightRoute({ ...flightRoute, ['departureDate']: e.target.value })} type='date' className='bg-[#f4f6f8] px-5 outline-none disabled:opacity-50 hover:cursor-pointer h-fit'></input>
+        <input onChange={handleInputDateChange} value={ticketDates['departureDate']} type='date' className='bg-[#f4f6f8] px-5 outline-none disabled:opacity-50 hover:cursor-pointer h-fit'></input>
         </div>
         <div className={`flex flex-col h-14 items-center justify-center bg-[#f4f6f8] ${isOneWay && 'opacity-50'}`}>
           <span className='text-md font-semibold h-fit tracking-wide '>Dönüş</span>

@@ -4,7 +4,7 @@ import DownArrow from "../assests/downArrow.svg";
 import UpArrow from "../assests/upArrow.svg";
 import FlightCardDetails from "./FlightCardDetails";
 
-const FlightCard = ( {flight} ) => {
+const FlightCard = ( {flight, setSelectedRoute, selectedRoute, isSecondPart, setIsSecondPart, index, detailsOpenedIndex, setDetailsOpenedIndex, isSelected} ) => {
   const {id
     ,airline
     ,departureAirport
@@ -14,11 +14,23 @@ const FlightCard = ( {flight} ) => {
     ,duration
     ,price
   } = flight;
+  
   const arrivalHour = arrivalDate.match(/T(.+):(.+)Z$/)[1];
   const departureHour = departureDate.match(/T(.+):(.+)Z$/)[1];
-  const [ detailsOpened, setDetailsOpened ] = useState(false)
+
+  const handleOpenDetails = () => {
+    if(detailsOpenedIndex == index)
+    {
+      setDetailsOpenedIndex(-1)
+    }
+    else
+    {
+      setDetailsOpenedIndex(index)
+    }
+  }
+  
   return (
-    <div className={`relative flex-col flex items-baseline mt-5 p-5 drop-shadow-xl ${detailsOpened ? 'h-80':'h-24'} w-full bg-white transition-all duration-200`}>
+    <div className={`relative flex-col flex items-baseline p-5 drop-shadow-xl ${detailsOpenedIndex == index ? 'h-80':'h-24'} w-full bg-white transition-all duration-200`}>
       <div className="absolute flex items-center justify-center right-0 top-0 bg-green-400 h-8 w-20 rounded-bl shadow-md">
         <span className="text-white font-semibold">{price} ₺</span>
       </div>
@@ -43,14 +55,14 @@ const FlightCard = ( {flight} ) => {
         </ul>
         
       </div>
-      <div onClick={()=>setDetailsOpened(!detailsOpened)} className="flex w-3/12 items-center justify-center hover:cursor-pointer">
+      <div onClick={handleOpenDetails} className="flex w-3/12 items-center justify-center hover:cursor-pointer">
         <span className="font-semibold mr-2 select-none">Seyahat detayları</span>
-        <img src={detailsOpened ? UpArrow:DownArrow} alt="downArrow"></img>
+        <img src={detailsOpenedIndex == index ? UpArrow:DownArrow} alt="downArrow"></img>
       </div>
      </div>
       {
-        detailsOpened && (
-          <div className="h-full w-full"> <FlightCardDetails /> </div>
+        detailsOpenedIndex == index && (
+          <div className="h-full w-full"> <FlightCardDetails isSelected={isSelected} flight= {flight} setSelectedRoute = {setSelectedRoute} selectedRoute = {selectedRoute} isSecondPart = {isSecondPart} setIsSecondPart = {setIsSecondPart} /> </div>
         )
       }
     </div>
