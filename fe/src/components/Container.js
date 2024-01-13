@@ -17,7 +17,7 @@ const Container = () => {
   const allList =  require("./flights.json")
   const [findedFlightList, setFindedFlightList] = useState(allList);
   const [sortedType, setSortedType] = useState(-1);
-  const sortList = [{name:'Kalkış saati', sortType:'departureDate' }, {name:'Dönüş saati', sortType:'arrivalDate' }, {name:'Uçuş uzunluğu', sortType:'duration' }, {name:'Ücret', sortType:'price' }];
+  const sortList = [{name: isSecondPart ?  'Dönüş saati':'Kalkış saati', sortType:'departureDate' }, {name:'Uçuş uzunluğu', sortType:'duration' }, {name:'Ücret', sortType:'price' }];
   const [isSortedReverse, setIsSortedReverse] = useState(true);
 
   const sortedButtonClick = (fieldName) => {
@@ -74,7 +74,7 @@ const Container = () => {
         </span>
       </div>
       <div className="flex-col items-end h-1/6 w-[50%] lg:w-[80%] md:w-[90%] xl:w-[60%] sm:w-[90%]">
-        <FlightReservation isOneWay={isOneWay} setIsOneWay={setIsOneWay} setFindedFlightList={setFindedFlightList} />
+        <FlightReservation isOneWay={isOneWay} isSecondPart={isSecondPart} setIsOneWay={setIsOneWay} setFindedFlightList={setFindedFlightList} />
         {selectedRoute.departureTicket["id"] > -1 && (
           <>
             <div className="flex-col h-fit font-semibold text-white py-2 mt-5">
@@ -127,18 +127,18 @@ const Container = () => {
             />
           </>
         )}
-        <div className="w-full flex items-end justify-end mt-10 mb-5 ">
-          <div className="w-6/12">
+        <div className="w-full flex items-end justify-end mt-10 mb-5">
+          <div className="w-5/12">
             <span className="font-semibold text-sm text-gray-500">
               Sıralama kriterleri
             </span>
-            <div className="flex space-x-5">
+            <div className="flex space-x-5 items-end justify-end">
               {sortList.map((button, index) => (
                 <button
                   key={index}
                   id={index}
                   onClick={(e) => sortedButtonClick(button["sortType"])}
-                  className={`w-28 h-10 bg-white drop-shadow-xl text-sm font-semibold rounded-lg transition-colors duration-100 ${
+                  className={`w-32 h-10 bg-white drop-shadow-xl text-sm font-semibold rounded-lg transition-colors duration-100 ${
                     sortedType == button["sortType"] &&
                     "border-blue-400 border text-blue-600"
                   } `}

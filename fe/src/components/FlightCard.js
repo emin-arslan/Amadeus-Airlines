@@ -62,7 +62,7 @@ const FlightCard = ( {flight, setSelectedRoute, selectedRoute, isSecondPart, set
      </div>
       {
         detailsOpenedIndex == index && (
-          <div className="h-full w-full"> <FlightCardDetails isSelected={isSelected} flight= {flight} setSelectedRoute = {setSelectedRoute} selectedRoute = {selectedRoute} isSecondPart = {isSecondPart} setIsSecondPart = {setIsSecondPart} /> </div>
+          <div className="h-full w-full"> <FlightCardDetails setDetailsOpenedIndex = {setDetailsOpenedIndex} isSelected={isSelected} flight= {flight} setSelectedRoute = {setSelectedRoute} selectedRoute = {selectedRoute} isSecondPart = {isSecondPart} setIsSecondPart = {setIsSecondPart} /> </div>
         )
       }
     </div>

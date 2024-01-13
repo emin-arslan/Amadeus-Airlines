@@ -1,14 +1,16 @@
 import React from "react";
 import AmadeusLogo from "../assests/amadeusLogo.png";
 
-const FlightCardDetails = ({ flight, setSelectedRoute, selectedRoute, isSecondPart, setIsSecondPart, isSelected }) => {
+const FlightCardDetails = ({ flight, setSelectedRoute, selectedRoute, isSecondPart, setIsSecondPart, isSelected, setDetailsOpenedIndex }) => {
   const handleSelectRoute = () =>{
     if(isSecondPart)
     {
+      setDetailsOpenedIndex(-1);
       setSelectedRoute({...selectedRoute, returnTicket: flight});
     }
     else
     {
+      setDetailsOpenedIndex(-1);
       setIsSecondPart(true)
       setSelectedRoute({...selectedRoute, departureTicket: flight});
     }

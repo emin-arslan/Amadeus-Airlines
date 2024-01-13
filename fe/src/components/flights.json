@@ -686,5 +686,53 @@
     "arrivalDate": "2024-02-01T17:00:00Z",
     "duration": "6h",
     "price": 200.0
+  },
+  {
+    "id": 45,
+    "airline": "Turkish Airlines",
+    "destinationAirport": {
+      "code": "IST",
+      "city": "Istanbul"
+    },
+    "departureAirport": {
+      "code": "JFK",
+      "city": "New York"
+    },
+    "departureDate": "2024-02-01T08:00:00Z",
+    "arrivalDate": "2024-02-01T14:00:00Z",
+    "duration": "6h",
+    "price": 500.0
+  },
+  {
+    "id": 46,
+    "airline": "Turkish Airlines",
+    "destinationAirport": {
+      "code": "IST",
+      "city": "Istanbul"
+    },
+    "departureAirport": {
+      "code": "JFK",
+      "city": "New York"
+    },
+    "departureDate": "2024-02-01T05:00:00Z",
+    "arrivalDate": "2024-02-01T14:00:00Z",
+    "duration": "6h",
+    "price": 500.0
+  },
+  {
+    "id": 47,
+    "airline": "Turkish Airlines",
+    "destinationAirport": {
+      "code": "IST",
+      "city": "Istanbul"
+    },
+    "departureAirport": {
+      "code": "JFK",
+      "city": "New York"
+    },
+    "departureDate": "2024-02-01T02:00:00Z",
+    "arrivalDate": "2024-02-01T19:00:00Z",
+    "duration": "6h",
+    "price": 500.0
   }
 ]
