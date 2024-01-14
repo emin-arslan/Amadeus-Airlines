@@ -30,6 +30,7 @@ const FlightReservation = ({setFindedFlightList,isOneWay, setIsOneWay, isSecondP
     var selectedDate = new Date(dateString);
 
     var minDate = new Date();
+    minDate.setHours(0,0,0,0);
     var maxDate =new Date("2100-12-31");
     if( !isNaN(selectedDate.getFullYear()) && minDate <= selectedDate && maxDate >= selectedDate )
     return true

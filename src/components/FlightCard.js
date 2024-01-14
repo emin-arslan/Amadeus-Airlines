@@ -15,7 +15,6 @@ const FlightCard = ( {flight, setSelectedRoute, selectedRoute, isSecondPart, set
   
 
   const tempArrivalDate = new Date(arrivalDate);
-  console.log(tempArrivalDate, 'temparrival');
   const arrivalHour = tempArrivalDate.toLocaleTimeString('default', { hour: '2-digit', minute: '2-digit' });
 
   const tempDepartureDate = new Date(departureDate);
