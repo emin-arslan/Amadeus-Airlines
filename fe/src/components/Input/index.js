@@ -8,6 +8,10 @@ const Input = ({ title, onChange, additionalClasses, name, flightRoute, setFligh
   const [selectedAirportIndex, setSelectedAirportIndex] = useState(-1);
   const [isInputFocused, setIsInputFocused] = useState(false);
   const [isAirportOptionsOpened, setIsAirportOptionsOpened] = useState(false);
+  const [inputValues, setInputValues] = useState({
+    fromAirport:'',
+    toAirport:''
+  })
   const handleKeyDown = (e) => {
 
     if(e.key === 'ArrowDown')
@@ -65,17 +69,19 @@ const Input = ({ title, onChange, additionalClasses, name, flightRoute, setFligh
 
   const handleVisibiltyAirportOptions = (e) => {
 
-    if(e.target.id != 'airportOptions' || e.target.id != 'airportInput')
+    if(e.target.id != 'airportOptions' || e.target.id != name)
     {
       setIsAirportOptionsOpened(false)
     }
   }
 
   const handleSelectAirport = (e) => {
+    setInputValues({...inputValues, [name]:e['city']})
     setFlightRoute({ ...flightRoute, [flightType]: e });
     setIsAirportOptionsOpened(false);
   }
-  const handleOnChange = (text) => {
+  const handleOnChange = (text, inputType) => {
+    setInputValues({...inputValues,[inputType]:text})
     setIsAirportOptionsOpened(true);
     setFlightRoute({ ...flightRoute, [flightType]: {} });
     text = text.toUpperCase();
@@ -102,11 +108,11 @@ const Input = ({ title, onChange, additionalClasses, name, flightRoute, setFligh
     <div>
       <label className="flex-1 relative block">
         <input
-          id="airportInput"
-          onChange={(e) => handleOnChange(e.target.value)}
+          id={name}
+          onChange={(e) => handleOnChange(e.target.value,name)}
           required
           className={`h-14 px-4 rounded w-full sm:w-[147px] transition-colors outline-none peer text-sm ${additionalClasses}`}
-          value={flightRoute[flightType]['name']?.length > 0 ? flightRoute[flightType]['city'] : null}
+          value={inputValues[name]}
         ></input>
         <span className="absolute top-0 left-0 h-full px-4 flex items-center font-semibold text-sm text-[#818e95] transition-all peer-focus:h-4 peer-focus:text-[10px] peer-valid:h-4 peer-valid:text-[10px]">
           {title}

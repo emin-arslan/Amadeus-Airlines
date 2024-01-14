@@ -1,5 +1,4 @@
-import React, { useCallback, useMemo, useState } from "react";
-import Input from "./Input";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import FlightReservation from "./FlightReservation";
 import FlightCard from "./FlightCard";
 import LoadingSvg from "../assests/loading.svg"
@@ -10,12 +9,14 @@ const Container = () => {
     departureTicket: {},
     returnTicket: {}
   })
+
+  
   const [isOneWay, setIsOneWay] = useState(false);
   const [isSecondPart, setIsSecondPart] = useState(undefined);
   const [detailsOpenedIndex, setDetailsOpenedIndex] = useState(-1)
   const [selectedAirportDetailsOpenedIndex, setSelectedAirportDetailsOpenedIndex ] = useState(-1);
-  const allList =  require("./flights.json")
-  const [findedFlightList, setFindedFlightList] = useState(allList);
+  const [findedFlightList, setFindedFlightList] = useState([]);
+  const [sectionIndex, setSectionIndex] = useState(0)
   const [sortedType, setSortedType] = useState(-1);
   const sortList = [{name: isSecondPart ?  'Dönüş saati':'Kalkış saati', sortType:'departureDate' }, {name:'Uçuş uzunluğu', sortType:'duration' }, {name:'Ücret', sortType:'price' }];
   const [isSortedReverse, setIsSortedReverse] = useState(true);
@@ -61,9 +62,7 @@ const Container = () => {
   )
 
   const showFlights = (count) => {
-    return findedFlightList
-      .slice(0, 15)
-      .map((flight) => <FlightCard key={flight.id} index={flight.id} flight={flight} setSelectedRoute = {setSelectedRoute} selectedRoute = {selectedRoute}  isSecondPart = {isSecondPart} setIsSecondPart ={setIsSecondPart} setDetailsOpenedIndex={setDetailsOpenedIndex} detailsOpenedIndex={detailsOpenedIndex}/>);
+    return findedFlightList.map((flight) => <FlightCard key={flight.id} index={flight.id} flight={flight} setSelectedRoute = {setSelectedRoute} selectedRoute = {selectedRoute}  isSecondPart = {isSecondPart} setIsSecondPart ={setIsSecondPart} setDetailsOpenedIndex={setDetailsOpenedIndex} detailsOpenedIndex={detailsOpenedIndex}/>);
   };
   return (
     <div className="flex flex-col h-[450px] w-full items-center justify-center bg-[url('https://cdn.turkishairlines.com/m/6761929144cccc1e/original/anasayfa-1400.webp')] bg-cover bg-no-repeat ">
@@ -72,9 +71,10 @@ const Container = () => {
         <span className="text-4xl font-semibold">
           Where would you like to explore?
         </span>
+        
       </div>
       <div className="flex-col items-end h-1/6 w-[50%] lg:w-[80%] md:w-[90%] xl:w-[60%] sm:w-[90%]">
-        <FlightReservation isOneWay={isOneWay} isSecondPart={isSecondPart} setIsOneWay={setIsOneWay} setFindedFlightList={setFindedFlightList} />
+        <FlightReservation setSectionIndex = {setSectionIndex} isOneWay={isOneWay} isSecondPart={isSecondPart} setIsOneWay={setIsOneWay} setFindedFlightList={setFindedFlightList} />
         {selectedRoute.departureTicket["id"] > -1 && (
           <>
             <div className="flex-col h-fit font-semibold text-white py-2 mt-5">
@@ -137,8 +137,9 @@ const Container = () => {
                 <button
                   key={index}
                   id={index}
+                  disabled={findedFlightList.length == 0 && true}
                   onClick={(e) => sortedButtonClick(button["sortType"])}
-                  className={`w-32 h-10 bg-white drop-shadow-xl text-sm font-semibold rounded-lg transition-colors duration-100 ${
+                  className={`w-32 h-10 bg-white disabled:opacity-30 drop-shadow-xl text-sm font-semibold rounded-lg transition-colors duration-100 ${
                     sortedType == button["sortType"] &&
                     "border-blue-400 border text-blue-600"
                   } `}
@@ -151,11 +152,15 @@ const Container = () => {
         </div>
         <div></div>
         <div className="flex flex-col h-auto w-full border-2 border-gray-200 rounded bg-[#f9f9f9] p-2">
-          {findedFlightList.length == undefined ? (
-            <img src={LoadingSvg} width={100} />
+          {findedFlightList == undefined ? (
+            <div className="flex items-center justify-center w-full"></div>
           ) : findedFlightList.length == 0 ? (
             <div className="">
-              Hiç Sonuç bulunmadı.
+              {sectionIndex === 0 ? 'Bulunan Sonuçlar burda listelenicek.':
+              sectionIndex === 1 ? <img src={LoadingSvg} width={100} />:
+              sectionIndex === -1 ? 'Gidiş için uygun sonuç bulunamadı.':
+              sectionIndex === -2 && 'Geri dönüş için uygun sonuç bulunamadı.'
+              }
               {showFlights()}
             </div>
           ) : (

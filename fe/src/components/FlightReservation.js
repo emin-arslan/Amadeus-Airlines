@@ -3,8 +3,11 @@ import PlaneSvg from '../assests/plane.svg'
 import Input from "./Input"
 import Checkbox from './Input/Checkbox'
 import RightArrow from '../assests/rightArrow.svg'
+import { useDispatch, useSelector } from 'react-redux'
+import { getFlightRoutesSelector } from '../selectors/uiSelectors'
+import {getAirportNames, getFlightRoutes} from "../actions/uiActions"
 
-const FlightReservation = ({setFindedFlightList,isOneWay, setIsOneWay, isSecondPart}) => {
+const FlightReservation = ({setFindedFlightList,isOneWay, setIsOneWay, isSecondPart, setSectionIndex}) => {
   const [ticketDates, setTicketDates] = useState({
     departureDate:'',
     returnDate:''
@@ -20,7 +23,9 @@ const FlightReservation = ({setFindedFlightList,isOneWay, setIsOneWay, isSecondP
     color:'red'
   });
 
-  const flights = require("./flights.json");
+  const dispatch = useDispatch();
+  const flightRoutes= useSelector(getFlightRoutesSelector)
+
   function isValidDateInput(dateString) {
     var selectedDate = new Date(dateString);
 
@@ -51,7 +56,8 @@ const FlightReservation = ({setFindedFlightList,isOneWay, setIsOneWay, isSecondP
   useEffect(()=>{
     if(!isOneWay && isSecondPart)
     {
-      const findedFlights = flights
+      console.log('part2', flightRoutes)
+      const findedFlights = flightRoutes
       .filter((flight) => {
         const flightDepartureDate = new Date(flight['departureDate']);
         const flightRouteDepartureDate = new Date(flightRoute['returnDate']);
@@ -72,21 +78,15 @@ const FlightReservation = ({setFindedFlightList,isOneWay, setIsOneWay, isSecondP
         duration: resultFlight.duration,
         price: resultFlight.price
       }));
+      if(flightRoutes.length > 0 && findedFlights.length <= 0){
+        setSectionIndex(-2);
+       }
       setFindedFlightList(findedFlights);
     }
   },[isOneWay,isSecondPart])
 
   useEffect(()=>{
-    if(isSecondPart != undefined)
-    {searchFlight()}
-    
-  },[isSecondPart])
-
-  const searchFlight = () => {
-    if(!inputValidation()) return;
-
-    setFindedFlightList(undefined)
-      const findedFlights = flights
+      const findedFlights = flightRoutes
       .filter((flight) => {
         const flightDepartureDate = new Date(flight['departureDate']);
         const flightRouteDepartureDate = new Date(flightRoute['departureDate']);
@@ -107,8 +107,17 @@ const FlightReservation = ({setFindedFlightList,isOneWay, setIsOneWay, isSecondP
         duration: resultFlight.duration,
         price: resultFlight.price
       }));
-      setFindedFlightList(findedFlights);
-      setFindedFlightList(findedFlights);
+    if(flightRoutes.length > 0 && findedFlights.length <= 0){
+      setSectionIndex(-1);
+     }
+    setFindedFlightList(findedFlights);
+  },[flightRoutes])
+
+  const searchFlight = () => {
+    if(!inputValidation()) return;
+    dispatch(getAirportNames())
+    dispatch(getFlightRoutes())
+    setSectionIndex(0);
 }
 
   const handleInputDateChange = (e) => {
@@ -125,7 +134,8 @@ const FlightReservation = ({setFindedFlightList,isOneWay, setIsOneWay, isSecondP
         <Checkbox isOneWay={isOneWay} setIsOneWay={setIsOneWay} />
         <div className="flex flex-wrap gap-x-4 gap-y-4">
           <Input
-            name="fromAirport"
+            id="fromAirport"
+            name="fromAirportInput"
             flightRoute={flightRoute}
             setFlightRoute={setFlightRoute}
             flightType="departureAirport"
@@ -133,7 +143,8 @@ const FlightReservation = ({setFindedFlightList,isOneWay, setIsOneWay, isSecondP
             title="NEREDEN"
           ></Input>
           <Input
-            name="toAirport"
+            id="toAirport"
+            name="toAirportInput"
             flightRoute={flightRoute}
             setFlightRoute={setFlightRoute}
             flightType="destinationAirport"
@@ -192,70 +203,3 @@ const FlightReservation = ({setFindedFlightList,isOneWay, setIsOneWay, isSecondP
 }
 
 export default FlightReservation
-/* 
-        <div className='flex sm:flex-col'>
-          <div className="flex md:flex-col md:space-y-4 sm:flex-col sm:space-y-4 ">
-            <div className="flex space-x-4 mr-4">
-              <Input
-                name="fromAirport"
-                flightRoute={flightRoute}
-                setFlightRoute={setFlightRoute}
-                flightType="departureAirport"
-                additionalClasses="w-48 bg-[#f4f6f8]"
-                title="NEREDEN"
-              ></Input>
-              <Input
-                name="toAirport"
-                flightRoute={flightRoute}
-                setFlightRoute={setFlightRoute}
-                flightType="destinationAirport"
-                additionalClasses="w-48 bg-[#f4f6f8] "
-                title="NEREYE"
-              ></Input>
-            </div>
-            <div className="flex space-x-4 mr-4 lg:text-xs sm:text-sm">
-              <div className="flex flex-col h-14 items-center justify-center bg-[#f4f6f8]">
-                <span className="text-md font-semibold h-fit tracking-wide ">
-                  Gidiş
-                </span>
-                <input
-                  id="departureDate"
-                  onChange={handleInputDateChange}
-                  value={ticketDates["departureDate"]}
-                  type="date"
-                  className="bg-[#f4f6f8] md:w-48 px-5 outline-none disabled:opacity-50 hover:cursor-pointer h-fit"
-                ></input>
-              </div>
-
-              <div
-                className={`flex flex-col h-14 items-center justify-center bg-[#f4f6f8] ${
-                  isOneWay && "opacity-50"
-                }`}
-              >
-                <span className="text-md font-semibold h-fit tracking-wide ">
-                  Dönüş
-                </span>
-                <input
-                  type="date"
-                  id="returnDate"
-                  onChange={handleInputDateChange}
-                  value={ticketDates["returnDate"]}
-                  disabled={isOneWay}
-                  className="bg-[#f4f6f8] md:w-48 px-5 outline-none disabled:opacity-50 hover:cursor-pointer h-fit"
-                ></input>
-              </div>
-            </div>
-          </div>
-          <div className='md:w-full flex items-center justify-center sm:items-start sm:justify-start sm:mt-5'>
-          <button
-            onClick={searchFlight}
-            className="flex w-32 h-14 justify-between items-center px-2 text-sm font-semibold text-white bg-[#e81932] hover:bg-[#ff3545]"
-          >
-            Search Flight
-            <img src={RightArrow} width={20} height={20} alt="rightArrow"></img>
-          </button>
-        </div>
-        </div>
-
-
-*/
