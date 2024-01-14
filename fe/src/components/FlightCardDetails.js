@@ -2,8 +2,11 @@ import React from "react";
 import AmadeusLogo from "../assests/amadeusLogo.png";
 
 const FlightCardDetails = ({ flight, setSelectedRoute, selectedRoute, isSecondPart, setIsSecondPart, isSelected, setDetailsOpenedIndex }) => {
-  const arrivalHour = flight.arrivalDate.match(/T(.+):(.+)Z$/)[1];
-  const departureHour = flight.departureDate.match(/T(.+):(.+)Z$/)[1];
+  const arrivalDate = new Date(flight.arrivalDate);
+  const arrivalHour = arrivalDate.toLocaleTimeString('default', { hour: '2-digit', minute: '2-digit' });
+
+  const departureDate = new Date(flight.departureDate);
+  const departureHour = departureDate.toLocaleTimeString('default', { hour: '2-digit', minute: '2-digit' });
   const handleSelectRoute = () =>{
     if(isSecondPart)
     {
@@ -45,7 +48,7 @@ const FlightCardDetails = ({ flight, setSelectedRoute, selectedRoute, isSecondPa
           <ul className="text-md font-semibold space-y-4">
             <li className="font-bold line-clamp-1">{flight.departureAirport.city} Airport ({flight.departureAirport.code})</li>
             <li className="font-bold line-clamp-1">{flight.destinationAirport.city} Airport ({flight.destinationAirport.code})</li>
-            <li className="flex items-center line-clamp-1 "><img src={AmadeusLogo} className="w-5 h-5 mr-2 sm:m-0" ></img> {flight.airline} - AS2860</li>
+            <li className="flex items-center line-clamp-1 "><img src={AmadeusLogo} className="w-5 h-5 mr-2 sm:m-0" alt="amadeuslogo" ></img> {flight.airline} - AS2860</li>
             <li>Airbus A319-100 Dar gövde</li>
             <li>{new Date(flight.departureDate).toLocaleDateString()}</li>
           </ul>

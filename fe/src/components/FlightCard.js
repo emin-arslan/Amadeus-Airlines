@@ -1,22 +1,25 @@
-import React, { useState } from "react";
+import React from "react";
 import AmadeusLogo from "../assests/amadeusLogo.png";
 import DownArrow from "../assests/downArrow.svg";
 import UpArrow from "../assests/upArrow.svg";
 import FlightCardDetails from "./FlightCardDetails";
 
 const FlightCard = ( {flight, setSelectedRoute, selectedRoute, isSecondPart, setIsSecondPart, index, detailsOpenedIndex, setDetailsOpenedIndex, isSelected} ) => {
-  const {id
-    ,airline
-    ,departureAirport
-    ,destinationAirport
-    ,departureDate
-    ,arrivalDate
-    ,duration
-    ,price
+  const {
+    departureAirport,
+    destinationAirport,
+    departureDate,
+    arrivalDate,
+    price
   } = flight;
   
-  const arrivalHour = arrivalDate.match(/T(.+):(.+)Z$/)[1];
-  const departureHour = departureDate.match(/T(.+):(.+)Z$/)[1];
+
+  const tempArrivalDate = new Date(arrivalDate);
+  console.log(tempArrivalDate, 'temparrival');
+  const arrivalHour = tempArrivalDate.toLocaleTimeString('default', { hour: '2-digit', minute: '2-digit' });
+
+  const tempDepartureDate = new Date(departureDate);
+  const departureHour = tempDepartureDate.toLocaleTimeString('default', { hour: '2-digit', minute: '2-digit' });
 
   const handleOpenDetails = () => {
     if(detailsOpenedIndex === index)

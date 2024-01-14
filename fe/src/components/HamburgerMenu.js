@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import HamburgerSvg from "../assests/hamburgerMenu.svg";
 
 const HamburgerMenu = () => {
-    // 770 mobile tasarım.
   const [toggleMenu, setToggleMenu] = useState(false);
 
   function handleToggleButton() {

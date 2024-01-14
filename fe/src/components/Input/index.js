@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAirportNamesSelector } from "../../selectors/uiSelectors";
 import { getAirportNames } from "../../actions/uiActions";
 
-const Input = ({ title, onChange, additionalClasses, name, flightRoute, setFlightRoute, flightType }) => {
+const Input = ({ title, additionalClasses, name, flightRoute, setFlightRoute, flightType }) => {
   const dispatch = useDispatch();
 
   useEffect(()=>{
@@ -97,8 +97,8 @@ const Input = ({ title, onChange, additionalClasses, name, flightRoute, setFligh
       const result = airportNames
         .filter(
           (airport) =>
-            airport["code"].toUpperCase().includes(text) ||
-            airport["city"].toUpperCase().includes(text)
+            airport["code"].toUpperCase().startsWith(text) ||
+            airport["city"].toUpperCase().startsWith(text)
         )
         .map((airport) => ({
           name: airport["name"],
