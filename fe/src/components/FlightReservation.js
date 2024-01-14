@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getFlightRoutesSelector } from '../selectors/uiSelectors'
 import {getAirportNames, getFlightRoutes} from "../actions/uiActions"
 
-const FlightReservation = ({setFindedFlightList,isOneWay, setIsOneWay, isSecondPart, setSectionIndex}) => {
+const FlightReservation = ({setFindedFlightList,isOneWay, setIsOneWay, isSecondPart, setSectionIndex, setSelectedRoute, setIsSecondPart}) => {
   const [ticketDates, setTicketDates] = useState({
     departureDate:'',
     returnDate:''
@@ -49,14 +49,13 @@ const FlightReservation = ({setFindedFlightList,isOneWay, setIsOneWay, isSecondP
       setInfo({text: 'Dates are not valid.', color:'text-red-400'});
       return false
     }
-    setInfo({text: 'Results are listing...', color:'text-green-400'});
+    setInfo({text: '', color:'text-green-400'});
     return true
   }
 
-  useEffect(()=>{
-    if(!isOneWay && isSecondPart)
-    {
-      const findedFlights = flightRoutes
+
+  const secondPartList = () =>{
+    const findedFlights = flightRoutes
       .filter((flight) => {
         const flightDepartureDate = new Date(flight['departureDate']);
         const flightRouteDepartureDate = new Date(flightRoute['returnDate']);
@@ -81,10 +80,18 @@ const FlightReservation = ({setFindedFlightList,isOneWay, setIsOneWay, isSecondP
         setSectionIndex(-2);
        }
       setFindedFlightList(findedFlights);
+  }
+
+  useEffect(()=>{
+    if(!isOneWay && isSecondPart)
+    {
+      secondPartList()
     }
   },[isOneWay,isSecondPart])
 
   useEffect(()=>{
+      if(!isSecondPart)
+      {
       const findedFlights = flightRoutes
       .filter((flight) => {
         const flightDepartureDate = new Date(flight['departureDate']);
@@ -106,14 +113,27 @@ const FlightReservation = ({setFindedFlightList,isOneWay, setIsOneWay, isSecondP
         duration: resultFlight.duration,
         price: resultFlight.price
       }));
+      
     if(flightRoutes.length > 0 && findedFlights.length <= 0){
       setSectionIndex(-1);
      }
     setFindedFlightList(findedFlights);
+  }
+  else if(isSecondPart) secondPartList()
   },[flightRoutes])
 
-  const searchFlight = () => {
+  useEffect(()=>{
+    if(isSecondPart === false) searchFlight('edit')
+  },[isSecondPart])
+
+  const searchFlight = (type = '') => {
     if(!inputValidation()) return;
+    if(type !== 'edit') setSelectedRoute({
+      departureTicket: {},
+      returnTicket: {}
+    })
+    setIsSecondPart(false)
+    setFindedFlightList([])
     dispatch(getAirportNames())
     dispatch(getFlightRoutes())
     setSectionIndex(0);

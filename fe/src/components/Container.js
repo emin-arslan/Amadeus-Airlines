@@ -10,7 +10,6 @@ const Container = () => {
     returnTicket: {}
   })
 
-  
   const [isOneWay, setIsOneWay] = useState(false);
   const [isSecondPart, setIsSecondPart] = useState(undefined);
   const [detailsOpenedIndex, setDetailsOpenedIndex] = useState(-1)
@@ -74,7 +73,7 @@ const Container = () => {
         
       </div>
       <div className="flex-col items-end h-1/6 w-[50%] lg:w-[80%] md:w-[90%] xl:w-[60%] sm:w-[90%]">
-        <FlightReservation setSectionIndex = {setSectionIndex} isOneWay={isOneWay} isSecondPart={isSecondPart} setIsOneWay={setIsOneWay} setFindedFlightList={setFindedFlightList} />
+        <FlightReservation setSectionIndex = {setSectionIndex} isOneWay={isOneWay} isSecondPart={isSecondPart} setIsSecondPart = {setIsSecondPart} setIsOneWay={setIsOneWay} setFindedFlightList={setFindedFlightList} setSelectedRoute = {setSelectedRoute} />
         {selectedRoute.departureTicket["id"] > -1 && (
           <>
             <div className="flex-col h-fit font-semibold text-white py-2 mt-5">

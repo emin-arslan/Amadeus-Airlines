@@ -10,8 +10,8 @@
       "code": "JFK",
       "city": "New York"
     },
-    "departureDate": "2024-02-01T08:00:00Z",
-    "arrivalDate": "2024-02-01T14:00:00Z",
+    "departureDate": "2024-02-02T08:00:00Z",
+    "arrivalDate": "2024-02-02T14:00:00Z",
     "duration": "6h",
     "price": 500.0
   },
