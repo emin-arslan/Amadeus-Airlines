@@ -41,7 +41,7 @@ const FlightReservation = ({setFindedFlightList,isOneWay, setIsOneWay, isSecondP
     const returnAirportDateCheck = isValidDateInput(ticketDates['returnDate'])
     const ticketDatesCheck = isOneWay ? departureAirportDateCheck : (departureAirportDateCheck && returnAirportDateCheck && ticketDates['departureDate'] <= ticketDates['returnDate'])
 
-    if(!flightRoute['departureAirport']['code'] || !flightRoute['destinationAirport']['code'] || flightRoute['departureAirport']['code'] == flightRoute['destinationAirport']['code']){
+    if(!flightRoute['departureAirport']['code'] || !flightRoute['destinationAirport']['code'] || flightRoute['departureAirport']['code'] === flightRoute['destinationAirport']['code']){
       setInfo({text: 'Departure airport & arrival airport values are not valid.', color:'text-red-400'});
       return false
     }
@@ -56,15 +56,14 @@ const FlightReservation = ({setFindedFlightList,isOneWay, setIsOneWay, isSecondP
   useEffect(()=>{
     if(!isOneWay && isSecondPart)
     {
-      console.log('part2', flightRoutes)
       const findedFlights = flightRoutes
       .filter((flight) => {
         const flightDepartureDate = new Date(flight['departureDate']);
         const flightRouteDepartureDate = new Date(flightRoute['returnDate']);
         const areDatesEqual = flightDepartureDate.toISOString().slice(0, 10) === flightRouteDepartureDate.toISOString().slice(0, 10);
         return (
-          flight['departureAirport']['code'] == flightRoute['destinationAirport']['code'] &&
-          flight['destinationAirport']['code'] == flightRoute['departureAirport']['code'] &&
+          flight['departureAirport']['code'] === flightRoute['destinationAirport']['code'] &&
+          flight['destinationAirport']['code'] === flightRoute['departureAirport']['code'] &&
           areDatesEqual
         );
       })
@@ -92,8 +91,8 @@ const FlightReservation = ({setFindedFlightList,isOneWay, setIsOneWay, isSecondP
         const flightRouteDepartureDate = new Date(flightRoute['departureDate']);
         const areDatesEqual = flightDepartureDate.toISOString().slice(0, 10) === flightRouteDepartureDate.toISOString().slice(0, 10);
         return (
-          flight['departureAirport']['code'] == flightRoute['departureAirport']['code'] &&
-          flight['destinationAirport']['code'] == flightRoute['destinationAirport']['code'] &&
+          flight['departureAirport']['code'] === flightRoute['departureAirport']['code'] &&
+          flight['destinationAirport']['code'] === flightRoute['destinationAirport']['code'] &&
           areDatesEqual
         );
       })
@@ -192,7 +191,7 @@ const FlightReservation = ({setFindedFlightList,isOneWay, setIsOneWay, isSecondP
         </div>
         <span
           className={`${info.color} ${
-            info.text.length == 0 && "hidden"
+            info.text.length === 0 && "hidden"
           } text-sm font-semibold `}
         >
           {info.text}

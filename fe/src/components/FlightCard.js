@@ -19,7 +19,7 @@ const FlightCard = ( {flight, setSelectedRoute, selectedRoute, isSecondPart, set
   const departureHour = departureDate.match(/T(.+):(.+)Z$/)[1];
 
   const handleOpenDetails = () => {
-    if(detailsOpenedIndex == index)
+    if(detailsOpenedIndex === index)
     {
       setDetailsOpenedIndex(-1)
     }
@@ -30,7 +30,7 @@ const FlightCard = ( {flight, setSelectedRoute, selectedRoute, isSecondPart, set
   }
   
   return (
-    <div className={`relative flex-col flex items-baseline p-5 sm:px-2 drop-shadow-xl ${detailsOpenedIndex == index ? 'h-80 sm:h-auto':'h-24'} w-full bg-white transition-all duration-200`}>
+    <div className={`relative flex-col flex items-baseline p-5 sm:px-2 drop-shadow-xl ${detailsOpenedIndex === index ? 'h-80 sm:h-auto':'h-24'} w-full bg-white transition-all duration-200`}>
       <div className="absolute flex items-center justify-center right-0 top-0 bg-green-400 h-8 w-20 rounded-bl shadow-md">
         <span className="text-white font-semibold">{price} ₺</span>
       </div>
@@ -57,11 +57,11 @@ const FlightCard = ( {flight, setSelectedRoute, selectedRoute, isSecondPart, set
       </div>
       <div onClick={handleOpenDetails} className="flex w-3/12 items-center justify-center sm:justify-end sm:w-full hover:cursor-pointer">
         <span className="font-semibold mr-2 select-none sm:text-[10px] sm:mr-0">Seyahat detayları</span>
-        <img src={detailsOpenedIndex == index ? UpArrow:DownArrow} alt="downArrow"></img>
+        <img src={detailsOpenedIndex === index ? UpArrow:DownArrow} alt="downArrow"></img>
       </div>
      </div>
       {
-        detailsOpenedIndex == index && (
+        detailsOpenedIndex === index && (
           <div className="h-full w-full"> <FlightCardDetails setDetailsOpenedIndex = {setDetailsOpenedIndex} isSelected={isSelected} flight= {flight} setSelectedRoute = {setSelectedRoute} selectedRoute = {selectedRoute} isSecondPart = {isSecondPart} setIsSecondPart = {setIsSecondPart} /> </div>
         )
       }

@@ -23,7 +23,7 @@ const Container = () => {
 
   const sortedButtonClick = (fieldName) => {
     let isReverseSort = isSortedReverse;
-    if(sortedType == fieldName){
+    if(sortedType === fieldName){
       isReverseSort = !isReverseSort
     }
     else{
@@ -140,7 +140,7 @@ const Container = () => {
                   disabled={findedFlightList.length == 0 && true}
                   onClick={(e) => sortedButtonClick(button["sortType"])}
                   className={`w-32 h-10 bg-white disabled:opacity-30 drop-shadow-xl text-sm font-semibold rounded-lg transition-colors duration-100 ${
-                    sortedType == button["sortType"] &&
+                    sortedType === button["sortType"] &&
                     "border-blue-400 border text-blue-600"
                   } `}
                 >
@@ -152,7 +152,7 @@ const Container = () => {
         </div>
         <div></div>
         <div className="flex flex-col h-auto w-full border-2 border-gray-200 rounded bg-[#f9f9f9] p-2">
-          {findedFlightList == undefined ? (
+          {findedFlightList === undefined ? (
             <div className="flex items-center justify-center w-full"></div>
           ) : findedFlightList.length == 0 ? (
             <div className="">

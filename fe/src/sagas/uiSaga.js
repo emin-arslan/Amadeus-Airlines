@@ -4,10 +4,8 @@ import api from '../api';
 import { GET_AIRPORT_NAMES, GET_FLIGHTS_ROUTES, SET_AIRPORT_NAMES, SET_FLIGHTS_ROUTES } from '../actionTypes';
 
 function* getAirportNames () {
-  console.log('here')
   try {
-    const airportNames = yield api.getAirportNames();
-    console.log(airportNames)
+    const {airportNames} = yield api.getAirportNames();
     if (airportNames) {
       yield put({
         type: SET_AIRPORT_NAMES,
@@ -15,13 +13,12 @@ function* getAirportNames () {
       });
     }
   } catch (error) {
-    console.log(error); // eslint-disable-line no-console
   }
 }
 
 function* getFlightRoutes () {
   try {
-    const flightRoutes = yield api.getFlightRoutes();
+    const {flightRoutes} = yield api.getFlightRoutes();
     if (flightRoutes) {
       yield put({
         type: SET_FLIGHTS_ROUTES,
@@ -29,7 +26,6 @@ function* getFlightRoutes () {
       });
     }
   } catch (error) {
-    console.log(error); // eslint-disable-line no-console
   }
 }
 

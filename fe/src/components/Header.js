@@ -3,7 +3,6 @@ import PersonLogo from "../assests/person.svg";
 import HamburgerMenu from "./HamburgerMenu";
 import { useSelector } from "react-redux";
 import {getIsMobile} from "../selectors/appSelectors"
-import Input from "./Input";
 
 const Header = () => {
   const logo = require("../assests/amadeusLogo.png")

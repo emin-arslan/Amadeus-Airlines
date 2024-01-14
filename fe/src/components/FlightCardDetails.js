@@ -2,7 +2,6 @@ import React from "react";
 import AmadeusLogo from "../assests/amadeusLogo.png";
 
 const FlightCardDetails = ({ flight, setSelectedRoute, selectedRoute, isSecondPart, setIsSecondPart, isSelected, setDetailsOpenedIndex }) => {
-  console.log(flight)
   const arrivalHour = flight.arrivalDate.match(/T(.+):(.+)Z$/)[1];
   const departureHour = flight.departureDate.match(/T(.+):(.+)Z$/)[1];
   const handleSelectRoute = () =>{
@@ -13,12 +12,9 @@ const FlightCardDetails = ({ flight, setSelectedRoute, selectedRoute, isSecondPa
     }
     else
     {
-      console.log('0')
       setDetailsOpenedIndex(-1);
       setIsSecondPart(true)
-      console.log('2')
       setSelectedRoute({...selectedRoute, departureTicket: flight});
-      console.log('3')
     }
   }
 

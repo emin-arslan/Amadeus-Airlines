@@ -1,12 +1,20 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import FlyingPlane from "../../assests/flyingPlane.svg";
+import { useDispatch, useSelector } from "react-redux";
+import { getAirportNamesSelector } from "../../selectors/uiSelectors";
+import { getAirportNames } from "../../actions/uiActions";
 
 const Input = ({ title, onChange, additionalClasses, name, flightRoute, setFlightRoute, flightType }) => {
-  const airportNames = require("./airportNames.json");
+  const dispatch = useDispatch();
+
+  useEffect(()=>{
+    dispatch(getAirportNames())
+  },[])
+
+  const airportNames = useSelector(getAirportNamesSelector);
   const [findedAirports, setFindedAirports] = useState([]);
   const [selectedAirportIndex, setSelectedAirportIndex] = useState(-1);
-  const [isInputFocused, setIsInputFocused] = useState(false);
   const [isAirportOptionsOpened, setIsAirportOptionsOpened] = useState(false);
   const [inputValues, setInputValues] = useState({
     fromAirport:'',
@@ -69,7 +77,7 @@ const Input = ({ title, onChange, additionalClasses, name, flightRoute, setFligh
 
   const handleVisibiltyAirportOptions = (e) => {
 
-    if(e.target.id != 'airportOptions' || e.target.id != name)
+    if(e.target.id !== 'airportOptions' || e.target.id !== name)
     {
       setIsAirportOptionsOpened(false)
     }
@@ -129,7 +137,7 @@ const Input = ({ title, onChange, additionalClasses, name, flightRoute, setFligh
         </span>
         {findedAirports.slice(0,5).map((e, index) => {
             return (
-              <div key={index} onClick={()=> handleSelectAirport(e)} className={`flex flex-wrap ${selectedAirportIndex == index && 'bg-[#3685e7] text-white'} items-center px-5 py-2 hover:bg-[#3685e7] group hover:text-white text-[15px] hover:cursor-pointer font-semibold`}>
+              <div key={index} onClick={()=> handleSelectAirport(e)} className={`flex flex-wrap ${selectedAirportIndex === index && 'bg-[#3685e7] text-white'} items-center px-5 py-2 hover:bg-[#3685e7] group hover:text-white text-[15px] hover:cursor-pointer font-semibold`}>
                 <img className="pr-2" alt="flyingPlane" src={FlyingPlane}></img>
                 <span className="line-clamp-1">{e["name"]}</span>
                 <span className="px-2">{`(${e["code"]}),`}</span>
