@@ -77,15 +77,14 @@ const FlightReservation = ({setFindedFlightList,isOneWay, setIsOneWay, isSecondP
   },[isOneWay,isSecondPart])
 
   useEffect(()=>{
-    searchFlight()
+    if(isSecondPart != undefined)
+    {searchFlight()}
+    
   },[isSecondPart])
-
-
 
   const searchFlight = () => {
     if(!inputValidation()) return;
-    if(!isSecondPart)
-    {
+
     setFindedFlightList(undefined)
       const findedFlights = flights
       .filter((flight) => {
@@ -110,46 +109,153 @@ const FlightReservation = ({setFindedFlightList,isOneWay, setIsOneWay, isSecondP
       }));
       setFindedFlightList(findedFlights);
       setFindedFlightList(findedFlights);
-    }
-    }
+}
 
   const handleInputDateChange = (e) => {
     setFlightRoute({ ...flightRoute, [e.target.id]: e.target.value})
     setTicketDates({...ticketDates, [e.target.id]: e.target.value})
   }
   return (
-    <div className='h-auto'>
-      
-       <div className='flex w-24 h-10 items-center justify-center rounded-t bg-white'>
-       
-        <img src={PlaneSvg} className='mr-2' alt='plane' ></img>
-        <span className='text-[#ef2636] font-semibold mr-1'>Uçak</span>
-       </div>
-      <div className='flex-col flex w-full items bg-white shadow-xl h-auto rounded-b rounded-tr p-3 pl-3 space-y-2 transition-all'>
-        <Checkbox isOneWay = {isOneWay} setIsOneWay = {setIsOneWay} />
-        <div className='flex space-x-4 '>
-        <Input name='fromAirport' flightRoute = {flightRoute} setFlightRoute = {setFlightRoute} flightType = 'departureAirport' additionalClasses='w-48 bg-[#f4f6f8]' title='NEREDEN'></Input>
-        <Input name='toAirport' flightRoute = {flightRoute} setFlightRoute = {setFlightRoute} flightType = 'destinationAirport' additionalClasses='w-48 bg-[#f4f6f8] ' title='NEREYE'></Input> 
-        <div className='flex flex-col h-14 items-center justify-center bg-[#f4f6f8]'>
-        <span className='text-md font-semibold h-fit tracking-wide '>Gidiş</span>
-        <input id='departureDate' onChange={handleInputDateChange} value={ticketDates['departureDate']} type='date' className='bg-[#f4f6f8] px-5 outline-none disabled:opacity-50 hover:cursor-pointer h-fit'></input>
-        </div>
-        
-        <div className={`flex flex-col h-14 items-center justify-center bg-[#f4f6f8] ${isOneWay && 'opacity-50'}`}>
-          <span className='text-md font-semibold h-fit tracking-wide '>Dönüş</span>
-        <input type='date' id='returnDate' onChange={handleInputDateChange} value={ticketDates['returnDate']} disabled={isOneWay} className='bg-[#f4f6f8] px-5 outline-none disabled:opacity-50 hover:cursor-pointer h-fit'></input>
-        </div>
-        
-        <div>
-          <button onClick={searchFlight} className="flex w-32 h-14 justify-between items-center px-2 text-sm font-semibold text-white bg-[#e81932] hover:bg-[#ff3545]">Search Flight
-          <img src={RightArrow} width={20} height={20} alt='rightArrow'></img>
+    <div className="h-auto">
+      <div className="flex w-24 h-10 items-center justify-center rounded-t bg-white">
+        <img src={PlaneSvg} className="mr-2" alt="plane"></img>
+        <span className="text-[#ef2636] font-semibold mr-1">Uçak</span>
+      </div>
+      <div className="flex-col flex w-full items bg-white shadow-xl h-auto rounded-b rounded-tr p-3 pl-3 space-y-2 transition-all">
+        <Checkbox isOneWay={isOneWay} setIsOneWay={setIsOneWay} />
+        <div className="flex flex-wrap gap-x-4 gap-y-4">
+          <Input
+            name="fromAirport"
+            flightRoute={flightRoute}
+            setFlightRoute={setFlightRoute}
+            flightType="departureAirport"
+            additionalClasses="w-48 bg-[#f4f6f8]"
+            title="NEREDEN"
+          ></Input>
+          <Input
+            name="toAirport"
+            flightRoute={flightRoute}
+            setFlightRoute={setFlightRoute}
+            flightType="destinationAirport"
+            additionalClasses="w-48 bg-[#f4f6f8] "
+            title="NEREYE"
+          ></Input>
+
+          <div className="flex flex-col h-14 items-center justify-center bg-[#f4f6f8]">
+            <span className="text-md font-semibold h-fit tracking-wide ">
+              Gidiş
+            </span>
+            <input
+              id="departureDate"
+              onChange={handleInputDateChange}
+              value={ticketDates["departureDate"]}
+              type="date"
+              className="bg-[#f4f6f8] lg:w-48 sm:w-[147px] sm:text-sm px-5 outline-none disabled:opacity-50 hover:cursor-pointer h-fit"
+            ></input>
+          </div>
+
+          <div
+            className={`flex flex-col h-14 items-center justify-center bg-[#f4f6f8] ${
+              isOneWay && "opacity-50"
+            }`}
+          >
+            <span className="text-md font-semibold h-fit tracking-wide ">
+              Dönüş
+            </span>
+            <input
+              type="date"
+              id="returnDate"
+              onChange={handleInputDateChange}
+              value={ticketDates["returnDate"]}
+              disabled={isOneWay}
+              className="bg-[#f4f6f8] lg:w-48 md:w-48 sm:w-[147px] sm:text-sm px-5 outline-none disabled:opacity-50 hover:cursor-pointer h-fit"
+            ></input>
+          </div>
+          <button
+            onClick={searchFlight}
+            className="flex w-32 lg:w-48 md:w-48 h-14 justify-between items-center px-2 text-sm font-semibold text-white bg-[#e81932] hover:bg-[#ff3545]"
+          >
+            Search Flight
+            <img src={RightArrow} width={20} height={20} alt="rightArrow"></img>
           </button>
         </div>
-        </div>
-        <span className={`${info.color} ${info.text.length === 0 && 'hidden'} text-sm font-semibold `}>{info.text}</span>
+        <span
+          className={`${info.color} ${
+            info.text.length == 0 && "hidden"
+          } text-sm font-semibold `}
+        >
+          {info.text}
+        </span>
       </div>
     </div>
-  )
+  );
 }
 
 export default FlightReservation
+/* 
+        <div className='flex sm:flex-col'>
+          <div className="flex md:flex-col md:space-y-4 sm:flex-col sm:space-y-4 ">
+            <div className="flex space-x-4 mr-4">
+              <Input
+                name="fromAirport"
+                flightRoute={flightRoute}
+                setFlightRoute={setFlightRoute}
+                flightType="departureAirport"
+                additionalClasses="w-48 bg-[#f4f6f8]"
+                title="NEREDEN"
+              ></Input>
+              <Input
+                name="toAirport"
+                flightRoute={flightRoute}
+                setFlightRoute={setFlightRoute}
+                flightType="destinationAirport"
+                additionalClasses="w-48 bg-[#f4f6f8] "
+                title="NEREYE"
+              ></Input>
+            </div>
+            <div className="flex space-x-4 mr-4 lg:text-xs sm:text-sm">
+              <div className="flex flex-col h-14 items-center justify-center bg-[#f4f6f8]">
+                <span className="text-md font-semibold h-fit tracking-wide ">
+                  Gidiş
+                </span>
+                <input
+                  id="departureDate"
+                  onChange={handleInputDateChange}
+                  value={ticketDates["departureDate"]}
+                  type="date"
+                  className="bg-[#f4f6f8] md:w-48 px-5 outline-none disabled:opacity-50 hover:cursor-pointer h-fit"
+                ></input>
+              </div>
+
+              <div
+                className={`flex flex-col h-14 items-center justify-center bg-[#f4f6f8] ${
+                  isOneWay && "opacity-50"
+                }`}
+              >
+                <span className="text-md font-semibold h-fit tracking-wide ">
+                  Dönüş
+                </span>
+                <input
+                  type="date"
+                  id="returnDate"
+                  onChange={handleInputDateChange}
+                  value={ticketDates["returnDate"]}
+                  disabled={isOneWay}
+                  className="bg-[#f4f6f8] md:w-48 px-5 outline-none disabled:opacity-50 hover:cursor-pointer h-fit"
+                ></input>
+              </div>
+            </div>
+          </div>
+          <div className='md:w-full flex items-center justify-center sm:items-start sm:justify-start sm:mt-5'>
+          <button
+            onClick={searchFlight}
+            className="flex w-32 h-14 justify-between items-center px-2 text-sm font-semibold text-white bg-[#e81932] hover:bg-[#ff3545]"
+          >
+            Search Flight
+            <img src={RightArrow} width={20} height={20} alt="rightArrow"></img>
+          </button>
+        </div>
+        </div>
+
+
+*/

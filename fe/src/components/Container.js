@@ -11,7 +11,7 @@ const Container = () => {
     returnTicket: {}
   })
   const [isOneWay, setIsOneWay] = useState(false);
-  const [isSecondPart, setIsSecondPart] = useState(false);
+  const [isSecondPart, setIsSecondPart] = useState(undefined);
   const [detailsOpenedIndex, setDetailsOpenedIndex] = useState(-1)
   const [selectedAirportDetailsOpenedIndex, setSelectedAirportDetailsOpenedIndex ] = useState(-1);
   const allList =  require("./flights.json")
@@ -67,7 +67,7 @@ const Container = () => {
   };
   return (
     <div className="flex flex-col h-[450px] w-full items-center justify-center bg-[url('https://cdn.turkishairlines.com/m/6761929144cccc1e/original/anasayfa-1400.webp')] bg-cover bg-no-repeat ">
-      <div className="flex flex-col h-full w-3/6 justify-center text-white -ml-4">
+      <div className="flex flex-col h-full w-[50%] lg:w-[80%] md:w-[90%] xl:w-[60%] sm:w-[90%] justify-center text-white -ml-4">
         <span className="block text-2xl mt-20">HELLO,</span>
         <span className="text-4xl font-semibold">
           Where would you like to explore?
@@ -128,11 +128,11 @@ const Container = () => {
           </>
         )}
         <div className="w-full flex items-end justify-end mt-10 mb-5">
-          <div className="w-5/12">
+          <div className="w-auto sm:w-full">
             <span className="font-semibold text-sm text-gray-500">
               Sıralama kriterleri
             </span>
-            <div className="flex space-x-5 items-end justify-end">
+            <div className="flex space-x-5 items-end justify-end sm:items-start sm:justify-start">
               {sortList.map((button, index) => (
                 <button
                   key={index}
@@ -154,8 +154,8 @@ const Container = () => {
           {findedFlightList.length == undefined ? (
             <img src={LoadingSvg} width={100} />
           ) : findedFlightList.length == 0 ? (
-            <div>
-              Hiç Sonuç bulunmadı. Rastgele Uçuşlar Listeleniyor...
+            <div className="">
+              Hiç Sonuç bulunmadı.
               {showFlights()}
             </div>
           ) : (
