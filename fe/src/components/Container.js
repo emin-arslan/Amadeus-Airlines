@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useCallback, useState } from "react";
 import FlightReservation from "./FlightReservation";
 import FlightCard from "./FlightCard";
 import LoadingSvg from "../assests/loading.svg"
@@ -17,7 +17,7 @@ const Container = () => {
   const [findedFlightList, setFindedFlightList] = useState([]);
   const [sectionIndex, setSectionIndex] = useState(0)
   const [sortedType, setSortedType] = useState(-1);
-  const sortList = [{name: isSecondPart ?  'Dönüş saati':'Kalkış saati', sortType:'departureDate' }, {name:'Uçuş uzunluğu', sortType:'duration' }, {name:'Ücret', sortType:'price' }];
+  const sortList = [{name: isSecondPart ?  'Return time':'Departure time', sortType:'departureDate' }, {name:'Flight duration', sortType:'duration' }, {name:'Cost', sortType:'price' }];
   const [isSortedReverse, setIsSortedReverse] = useState(true);
 
   const sortedButtonClick = (fieldName) => {
@@ -40,7 +40,7 @@ const Container = () => {
       sortedArray = findedFlightList.sort((current,next) => (  new Date(current['departureDate']) - new Date(current['arrivalDate']) ) - 
                                                   (  new Date(next['departureDate']) - new Date(next['arrivalDate']) ) )
     }
-    else if(isReverseSort && (fieldName == 'duration')){
+    else if(isReverseSort && (fieldName === 'duration')){
       sortedArray = findedFlightList.sort((current,next) => (  new Date(next['departureDate']) - new Date(next['arrivalDate']) ) - 
                                                   (  new Date(current['departureDate']) - new Date(current['arrivalDate']) ) )
     }
@@ -79,7 +79,7 @@ const Container = () => {
             <div className="flex-col h-fit font-semibold text-white py-2 mt-5">
               <div className="flex items-center space-x-2">
                 <span className="flex items-center justify-center w-20 bg-[#e81932] px-2 py-1">
-                  Gidiş
+                  Departure
                 </span>
                 <div className="flex space-x-1 hover:cursor-pointer">
                   <img src={EditSvg} alt="editSVG" />
@@ -105,7 +105,7 @@ const Container = () => {
             <div className="flex-col h-fit font-semibold text-white py-2 mt-5">
               <div className="flex items-center space-x-2">
                 <span className="flex items-center justify-center w-20 bg-[#2073e3] px-2 py-1">
-                  Dönüş
+                  Return
                 </span>
                 <div className="flex space-x-1 hover:cursor-pointer">
                   <img src={EditSvg} alt="editSVG" />
@@ -129,14 +129,14 @@ const Container = () => {
         <div className="w-full flex items-end justify-end mt-10 mb-5">
           <div className="w-auto sm:w-full">
             <span className="font-semibold text-sm text-gray-500">
-              Sıralama kriterleri
+              Sorting criteria
             </span>
             <div className="flex space-x-5 items-end justify-end sm:items-start sm:justify-start">
               {sortList.map((button, index) => (
                 <button
                   key={index}
                   id={index}
-                  disabled={findedFlightList.length == 0 && true}
+                  disabled={findedFlightList.length === 0 && true}
                   onClick={(e) => sortedButtonClick(button["sortType"])}
                   className={`w-32 h-10 bg-white disabled:opacity-30 drop-shadow-xl text-sm font-semibold rounded-lg transition-colors duration-100 ${
                     sortedType === button["sortType"] &&
@@ -153,19 +153,19 @@ const Container = () => {
         <div className="flex flex-col h-auto w-full border-2 border-gray-200 rounded bg-[#f9f9f9] p-2">
           {findedFlightList === undefined ? (
             <div className="flex items-center justify-center w-full"></div>
-          ) : findedFlightList.length == 0 ? (
+          ) : findedFlightList.length === 0 ? (
             <div className="">
-              {sectionIndex === 0 ? 'Bulunan Sonuçlar burda listelenicek.':
-              sectionIndex === 1 ? <img src={LoadingSvg} width={100} />:
-              sectionIndex === -1 ? 'Gidiş için uygun sonuç bulunamadı.':
-              sectionIndex === -2 && 'Geri dönüş için uygun sonuç bulunamadı.'
+              {sectionIndex === 0 ? 'The found results will be listed here':
+              sectionIndex === 1 ? <img src={LoadingSvg} width={100} alt="loadingSVG" />:
+              sectionIndex === -1 ? 'No suitable results found for departure.':
+              sectionIndex === -2 && 'No suitable results found for the return.'
               }
               {showFlights()}
             </div>
           ) : (
             <div className="space-y-5">
-              {isSecondPart && !isOneWay ? "Geri dönüş için uygun biletler listelenmiştir.":
-                "Gidiş için uygun biletler listelenmiştir."}
+              {isSecondPart && !isOneWay ? "Suitable tickets for the return are listed.":
+                "Suitable tickets for the departure are listed"}
               {showFlights()}
             </div>
           )}

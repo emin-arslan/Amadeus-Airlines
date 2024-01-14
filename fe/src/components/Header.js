@@ -6,7 +6,7 @@ import {getIsMobile} from "../selectors/appSelectors"
 
 const Header = () => {
   const logo = require("../assests/amadeusLogo.png")
-  const menuList = ["PLANLA & UÇ", "SEYAHAT DENEYİMİ", "KEŞFET", "MILES&SMILES", "YARDIM", "Üye ol"];
+  const menuList = ["PLAN & FLY", "TRAVEL EXPERIENCE", "DISCOVER", "MILES&SMILES", "HELP", "Sign up"];
   const isMobile = useSelector(getIsMobile)
 
 

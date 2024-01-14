@@ -10,9 +10,9 @@ const HamburgerMenu = () => {
   }
 
   const menuList = [
-    "PLANLA & UÇ",
-    "SEYAHAT DENEYİMİ",
-    "KEŞFET",
+    "PLAN & FLY",
+    "TRAVEL EXPERIENCE",
+    "DISCOVER",
     "MILES&SMILES",
     "YARDIM",
   ];

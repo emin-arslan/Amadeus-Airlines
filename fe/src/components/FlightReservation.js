@@ -147,7 +147,7 @@ const FlightReservation = ({setFindedFlightList,isOneWay, setIsOneWay, isSecondP
     <div className="h-auto">
       <div className="flex w-24 h-10 items-center justify-center rounded-t bg-white">
         <img src={PlaneSvg} className="mr-2" alt="plane"></img>
-        <span className="text-[#ef2636] font-semibold mr-1">Uçak</span>
+        <span className="text-[#ef2636] font-semibold ">Airplane</span>
       </div>
       <div className="flex-col flex w-full items bg-white shadow-xl h-auto rounded-b rounded-tr p-3 pl-3 space-y-2 transition-all">
         <Checkbox isOneWay={isOneWay} setIsOneWay={setIsOneWay} />
@@ -159,7 +159,7 @@ const FlightReservation = ({setFindedFlightList,isOneWay, setIsOneWay, isSecondP
             setFlightRoute={setFlightRoute}
             flightType="departureAirport"
             additionalClasses="w-48 bg-[#f4f6f8]"
-            title="NEREDEN"
+            title="FROM"
           ></Input>
           <Input
             id="toAirport"
@@ -168,12 +168,12 @@ const FlightReservation = ({setFindedFlightList,isOneWay, setIsOneWay, isSecondP
             setFlightRoute={setFlightRoute}
             flightType="destinationAirport"
             additionalClasses="w-48 bg-[#f4f6f8] "
-            title="NEREYE"
+            title="TO"
           ></Input>
 
           <div className="flex flex-col h-14 items-center justify-center bg-[#f4f6f8]">
             <span className="text-md font-semibold h-fit tracking-wide ">
-              Gidiş
+              Departure
             </span>
             <input
               id="departureDate"
@@ -190,7 +190,7 @@ const FlightReservation = ({setFindedFlightList,isOneWay, setIsOneWay, isSecondP
             }`}
           >
             <span className="text-md font-semibold h-fit tracking-wide ">
-              Dönüş
+              Return
             </span>
             <input
               type="date"

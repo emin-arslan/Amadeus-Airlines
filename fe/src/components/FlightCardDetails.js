@@ -51,7 +51,7 @@ const FlightCardDetails = ({ flight, setSelectedRoute, selectedRoute, isSecondPa
           </ul>
         </div>
         <div className="flex justify-end items-end sm:justify-end sm:w-full w-2/12 space-x-2">
-          <button onClick={handleSelectRoute} className={` ${isSelected && 'hidden'} w-20 absolute h-10 text-sm font-semibold text-white bg-[#e81932] hover:bg-[#ff3545]`}>SEÇ</button>
+          <button onClick={handleSelectRoute} className={` ${isSelected && 'hidden'} w-20 absolute h-10 text-sm font-semibold text-white bg-[#e81932] hover:bg-[#ff3545]`}>SELECT</button>
         </div>
         {}
       </div>

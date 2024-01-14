@@ -56,7 +56,7 @@ const FlightCard = ( {flight, setSelectedRoute, selectedRoute, isSecondPart, set
         
       </div>
       <div onClick={handleOpenDetails} className="flex w-3/12 items-center justify-center sm:justify-end sm:w-full hover:cursor-pointer">
-        <span className="font-semibold mr-2 select-none sm:text-[10px] sm:mr-0">Seyahat detayları</span>
+        <span className="font-semibold mr-2 select-none sm:text-[10px] sm:mr-0">Travel details</span>
         <img src={detailsOpenedIndex === index ? UpArrow:DownArrow} alt="downArrow"></img>
       </div>
      </div>
